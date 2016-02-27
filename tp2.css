@@ -1,0 +1,15 @@
+body {
+	margin: 0;
+}
+#carre {
+	height: 50px;
+	width: 50px;
+	background-color: red;
+	position: absolute;
+	float: left;
+}
+#container {
+	margin: 0;
+	height: 50px;
+	width: auto;
+}
