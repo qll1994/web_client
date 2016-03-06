@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+-->
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/test_1.css">
+<script type="text/javascript">
+//对不同浏览器的适应性
+window.requestAnimationFrame = window.requestAnimationFrame 
+|| window.mozRequestAnimationFrame 
+|| window.webkitRequestAnimationFrame 
+|| window.msRequestAnimationFrame;
+//封装
+(function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+ 
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+ 
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+
+function start(){
+	var elem = document.getElementById("carre");
+	var left = 400;
+	var timer;
+	// Move the element 10px on the right every 16ms
+	timer = setInterval(function() {
+		elem.style.left = ( left -= 10 ) + "px";
+		// clear the timer at 400px to stop the animation
+		if ( left === 0 ) {
+			clearInterval( timer );
+		}
+	}, 16);
+}
+
+function pausecomp(millis) 
+		{
+			var date = new Date();
+			var curDate = null;
+			var elem = document.getElementById("carre");
+			var left = 400;
+			var timer;
+			do { 
+				curDate = new Date(); 
+				elem.style.left = (left-=(10/16)*(curDate-date)) + "px";
+			} while(curDate-date < millis);
+		} 
+var date = new Date();	
+
+function test3()
+{	
+	var left = 400;
+	var curDate = null;
+	var elem = document.getElementById("carre");
+	curDate = new Date();
+	if (curDate-date <= 640) {		
+		elem.style.left = (left -= (10/16)*(curDate-date)) + "px";
+		var anim = requestAnimationFrame(test3);
+	}
+}
+function test5()
+{
+	var elem = document.getElementById("carre");
+	left = 400;
+	curDate = new Date();
+	if (curDate-date<=640) {
+		
+		elem.style.left = (left -= (10/16)*(curDate-date)) + "px";//10fps: 10px/1000ms donc on change (10/16)=>(10/100)   80fps:(10/(1000/80))
+		setTimeout(test5,16);
+	}
+	
+}
+</script>
+	<title>tp1</title>
+</head>
+<body onload="test5()">
+<div id="container">
+<div id="carre"></div>
+</div>
+
+</body>
+</html>
