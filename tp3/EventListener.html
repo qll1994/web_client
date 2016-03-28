@@ -1,1 +1,167 @@
 # web_client
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Events </title>
+    </head>
+    <body>
+    <CANVAS WIDTH="700" HEIGHT="700" ID="canvas_1" tabindex="0" style="border-style: solid; border-width: 2px; width: 500px;">
+			Canvas tag not supported
+		</CANVAS>
+    </body>
+<script>
+var animFrame = window.requestAnimationFrame||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            window.oRequestAnimationFrame      ||
+            window.msRequestAnimationFrame     ||
+            null ;
+var pos = new Array;
+var canvas = document.getElementById("canvas_1");
+var ctx = canvas.getContext('2d');
+var img = new Image();
+img.src = 'hero_walk_cycle_spritesheet_by_mrnoobtastic-d3defej.png';
+var x = 128;
+var y = 128;
+ctx.drawImage(img,128,256,128,128,x,y,128,128);
+for (var i = 0; i < 4; i++) {
+	pos[i] = 0;
+};
+pos[2] = 1;
+
+
+window.addEventListener("keydown", function (event) {
+  if (event.defaultPrevented) {
+    return; // Should do nothing if the key event was already consumed.
+  }
+
+  switch (event.key) {
+    case "ArrowDown":
+      // Do something for "down arrow" key press.
+      pos[2] = (pos[2] + 1) % 4;
+      y += 10;
+      clearCanvas();
+      ctx.drawImage(img,pos[2]*128,256,128,128,x,y,128,128);//context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+
+      break;
+    case "ArrowUp":
+      // Do something for "up arrow" key press.
+      pos[3] = (pos[3] + 1) % 4;
+      y -= 10;
+      clearCanvas();
+      ctx.drawImage(img,pos[3]*128,128*3,128,128,x,y,128,128);//context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+
+      break;
+    case "ArrowLeft":
+      // Do something for "left arrow" key press.
+      pos[0] = (pos[0] + 1) % 4;
+      x -= 10;
+      clearCanvas();
+      ctx.drawImage(img,pos[0]*128,0,128,128,x,y,128,128);//context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+      break;
+    case "ArrowRight":
+      // Do something for "right arrow" key press.
+      pos[1] = (pos[1] + 1) % 4;
+      x += 10;
+      clearCanvas();
+      ctx.drawImage(img,pos[1]*128,128,128,128,x,y,128,128);//context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+      break;
+    case "Enter":
+      // Do something for "enter" or "return" key press.
+      break;
+    case "Escape":
+      // Do something for "esc" key press.
+      break;
+    default:
+      return; // Quit when this doesn't handle the key event.
+  }
+
+  // Consume the event for suppressing "double action".
+  event.preventDefault();
+}, true);
+canvas.addEventListener("mousedown", doMouseDown,false);
+    function doMouseDown(event){
+        if(event.clientX > x) //turn right
+          {
+            mvRight(event);
+           /* if(event.clientY < y)
+            {
+              mvUp(event);
+            }else{mvDown(event);}*/
+          }else if (event.clientX < x) 
+          {
+            mvLeft(event);
+          };  
+       /* if(event.clientY < y)
+         {
+          pos[3] = (pos[3] + 1) % 4;
+          clearCanvas();
+          y -= 10;
+          ctx.drawImage(img,pos[3]*128,128*3,128,128,x,y,128,128);
+        }
+        if(event.clientY > y)
+        {
+          pos[2] = (pos[2] + 1) % 4;
+          clearCanvas();
+          y += 10;
+          ctx.drawImage(img,pos[3]*128,128*2,128,128,x,y,128,128);
+         }*/
+       }
+
+function mvRight(event)
+{
+  if(event.clientX > x)
+  {
+    pos[1] = (pos[1] + 1) % 4;
+    clearCanvas();
+    x += 10;
+    ctx.drawImage(img,pos[1]*128,128,128,128,x,y,128,128);
+  }else{clearInterval();}
+}
+function mvLeft(event)
+{
+  if(event.clientX < x)
+  {
+    pos[0] = (pos[0] + 1) % 4;
+    clearCanvas();
+    x -= 10;
+    ctx.drawImage(img,pos[0]*128,0,128,128,x,y,128,128);
+  }else{clearInterval();}
+}
+function mvUp(event)
+{
+  if(event.clientY < y)
+  {
+    pos[3] = (pos[3] + 1) % 4;
+    clearCanvas();
+    y -= 10;
+    ctx.drawImage(img,pos[3]*128,128*3,128,128,x,y,128,128);
+  }else{clearInterval();}
+}
+function mvDown(event)
+{
+  if(event.clientY > y)
+  {
+    pos[2] = (pos[2] + 1) % 4;
+    clearCanvas();
+    y += 10;
+    ctx.drawImage(img,pos[3]*128,128*2,128,128,x,y,128,128);
+  }else{clearInterval();}
+}
+/*var mainloop = function() {
+    draw();
+    update();
+};    
+var recursiveAnim = function() {
+    mainloop();
+    animFrame( recursiveAnim );
+};
+
+animFrame( recursiveAnim ); */
+function clearCanvas()//?
+{
+  canvas.width = canvas.width;
+}
+    </script>
