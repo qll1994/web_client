@@ -50,7 +50,7 @@ resultObj.prototype.update = function()
 	{
 		this.niv = 4;
 	}
-
+	changeSpd(this.niv);
 /*	if(this.time > 40 && this.time < 50)
 	{
 		//ctx.fillText("Niveau update...! Niveau 1!",canWidth/2,canHeight/2);
